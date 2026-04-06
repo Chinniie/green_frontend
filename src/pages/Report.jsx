@@ -25,9 +25,13 @@ export default function Report() {
   const fetchMonthlySummary = async () => {
     try {
       setLoading(true);
-      // ✅ มั่นใจว่า Path ตรงกับ Backend: /api/report/monthly-summary/
+
+      // ✅ 1. ใช้ Base URL จาก Environment
+      const baseURL =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
       const res = await axios.get(
-        `http://localhost:5000/api/report/monthly-summary/${user.id}`,
+        `${baseURL}/report/monthly-summary/${user.id}`,
       );
       setReportData(res.data);
     } catch (err) {
@@ -38,7 +42,10 @@ export default function Report() {
   };
 
   const exportExcel = () => {
-    window.open(`http://localhost:5000/api/report/export/${user.id}`, "_blank");
+    // ✅ 2. ปรับตัวดึงไฟล์ Excel ให้ไปที่ Render
+    const baseURL =
+      import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+    window.open(`${baseURL}/report/export/${user.id}`, "_blank");
   };
 
   const handlePrint = () => {
