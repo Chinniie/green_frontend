@@ -28,9 +28,12 @@ export default function PeakAnalysis() {
   const fetchPeakData = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(
-        `http://localhost:5000/api/energy/usage/${user.id}`,
-      );
+      
+      // ✅ แก้ไข: ใช้ Environment Variable แทน localhost
+      const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+      
+      const res = await axios.get(`${baseURL}/energy/usage/${user.id}`);
+      
       if (res.data && res.data.data) {
         setData(res.data.data);
       }
