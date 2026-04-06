@@ -1,3 +1,4 @@
+// 🧠 InsightSection.jsx
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -9,10 +10,18 @@ export default function InsightSection({ domain }) {
   }, [domain]);
 
   const fetchInsight = async () => {
-    const res = await axios.get(
-      `http://localhost:5000/api/insight?domain=${domain}`
-    );
-    setInsight(res.data);
+    try {
+      // ✅ แก้ไข: ใช้ Base URL จาก Environment
+      const baseURL =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
+      const res = await axios.get(
+        `${baseURL}/ai/insight?domain=${domain}`, // 💡 อย่าลืมเช็ค Path /ai/ นะครับถ้าบอสแยก Folder ไว้
+      );
+      setInsight(res.data);
+    } catch (err) {
+      console.error("AI INSIGHT FETCH ERROR:", err);
+    }
   };
 
   if (!insight) return <div>Loading...</div>;
@@ -26,9 +35,7 @@ export default function InsightSection({ domain }) {
 
       <p className="mt-2 text-gray-700">{insight.insight}</p>
 
-      <p className="mt-2 text-green-600">
-        💡 {insight.suggestion}
-      </p>
+      <p className="mt-2 text-green-600">💡 {insight.suggestion}</p>
     </div>
   );
 }
