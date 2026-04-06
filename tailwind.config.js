@@ -2,15 +2,10 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,jsx}"
+    "./src/**/*.{js,ts,jsx,tsx}", // ✅ เช็คบรรทัดนี้ให้ดี ต้องมี /src/ นำหน้า
   ],
   theme: {
-    extend: {
-      colors: {
-        primary: "#16a34a",   // เขียว energy
-        dark: "#0f172a",      // dashboard dark
-      }
-    },
+    extend: {},
   },
   plugins: [],
-};
+}
