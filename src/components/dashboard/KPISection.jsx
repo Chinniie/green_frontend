@@ -1,5 +1,5 @@
 // 🔥 KPISection.jsx
-import KpiCard from "./KpiCard";
+import KpiCard from "./ui/KpiCard";
 
 const format = (v) => Number(v || 0).toFixed(2);
 
