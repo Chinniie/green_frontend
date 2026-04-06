@@ -19,12 +19,16 @@ export default function Simulation() {
   useEffect(() => {
     const fetchBaseline = async () => {
       try {
+        // ✅ แก้ไข: ใช้ Base URL จาก Environment
+        const baseURL =
+          import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
         const res = await axios.get(
-          `http://localhost:5000/api/report/monthly-summary/${user.id}`,
+          `${baseURL}/report/monthly-summary/${user.id}`,
         );
         setCurrentData(res.data.current);
       } catch (err) {
-        console.error(err);
+        console.error("SIMULATION BASELINE FETCH ERROR:", err);
       } finally {
         setLoading(false);
       }
