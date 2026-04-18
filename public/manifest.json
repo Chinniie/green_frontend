@@ -1,0 +1,15 @@
+{
+  "short_name": "GreenCarbon",
+  "name": "Green Carbon Energy Platform",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#10b981",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
