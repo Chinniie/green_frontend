@@ -1,11 +1,20 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
+  darkMode: "class",
+
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}", // ✅ เช็คบรรทัดนี้ให้ดี ต้องมี /src/ นำหน้า
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
+
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#16a34a",
+        dashboard: "#0f172a", // 👈 เปลี่ยนชื่อ (กันชนกับ dark:)
+      },
+    },
   },
+
   plugins: [],
-}
+};
