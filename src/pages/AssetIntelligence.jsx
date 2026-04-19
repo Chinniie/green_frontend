@@ -1,15 +1,13 @@
 import React, { useState, useMemo } from "react";
 import Layout from "../components/ui/Layout";
 import { useEnergy } from "../context/EnergyContext";
-import { useTranslation } from "react-i18next"; // ✅ 1. Import Hook
+import { useTranslation } from "react-i18next";
 import {
   Power,
   Zap,
-  Clock,
   TrendingUp,
   AlertCircle,
   Plus,
-  Cpu,
   Activity,
   Settings2,
   BarChart3,
@@ -19,19 +17,15 @@ import {
   Line,
   BarChart,
   Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   Cell,
 } from "recharts";
 
 export default function AssetIntelligence() {
-  const { t } = useTranslation(); // ✅ 2. Initialize
+  const { t } = useTranslation();
   const { effectiveRate } = useEnergy();
 
-  // 🧠 ข้อมูล Smart Plugs (Individual Control)
   const [plugs, setPlugs] = useState([
     {
       id: 1,
@@ -51,8 +45,6 @@ export default function AssetIntelligence() {
     },
   ]);
 
-  // 🧠 ข้อมูล Machine Breakdown (Industrial Assets)
-  // หมายเหตุ: status จะถูกนำไป map กับ key ใน i18n
   const [machines] = useState([
     {
       id: 101,
@@ -98,198 +90,179 @@ export default function AssetIntelligence() {
 
   return (
     <Layout>
-      <div className="max-w-[1600px] mx-auto space-y-10 pb-20 animate-in fade-in duration-700">
-        {/* --- 🔝 Header --- */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center bg-slate-900 p-10 rounded-[3.5rem] shadow-2xl text-white relative overflow-hidden">
-          <div className="relative z-10">
-            <h1 className="text-5xl font-black tracking-tighter mb-2 italic uppercase">
+      <div className="max-w-[1400px] mx-auto space-y-8 md:space-y-10 pb-16 px-4 sm:px-6 md:px-10">
+        {/* 🔝 HEADER */}
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center bg-slate-900 p-6 md:p-10 rounded-2xl md:rounded-[3rem] text-white gap-6 relative overflow-hidden">
+          <div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight italic uppercase">
               {t("assetIntel")}
             </h1>
-            <p className="text-emerald-400 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2">
+            <p className="text-emerald-400 font-bold uppercase tracking-widest text-[10px] flex items-center gap-2 mt-2">
               <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
               {t("realtimeMonitor")}: {machines.length + plugs.length}{" "}
               {t("assetsOnline")}
             </p>
           </div>
-          <div className="flex items-center gap-4 relative z-10 mt-6 lg:mt-0 bg-white/5 p-2 rounded-[2.5rem] border border-white/10">
-            <div className="bg-emerald-500 text-white px-8 py-4 rounded-[2rem] flex items-center gap-3 shadow-lg">
-              <Zap size={20} />
-              <span className="font-black text-2xl">
-                {(totalWatts / 1000).toFixed(1)}{" "}
-                <span className="text-sm font-normal opacity-80">kW</span>
+
+          <div className="flex w-full sm:w-auto items-center justify-between sm:justify-start gap-3 bg-white/10 p-2 rounded-2xl border border-white/10">
+            <div className="flex-1 sm:flex-none bg-emerald-500 px-4 md:px-6 py-3 rounded-xl flex items-center justify-center gap-2">
+              <Zap size={18} />
+              <span className="font-black text-lg md:text-xl">
+                {(totalWatts / 1000).toFixed(1)}
+                <span className="text-xs ml-1 opacity-70">kW</span>
               </span>
             </div>
-            <button className="p-4 text-slate-400 hover:text-white transition-colors">
-              <Settings2 />
+
+            <button className="p-3 text-slate-300 hover:text-white">
+              <Settings2 size={20} />
             </button>
-          </div>
-          <div className="absolute -right-20 -bottom-20 text-[20rem] opacity-5 pointer-events-none font-black italic">
-            4.0
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* --- 📦 Section 1: Machine Health --- */}
-          <div className="lg:col-span-2 space-y-8">
-            <div className="bg-white p-10 rounded-[3.5rem] shadow-sm border border-slate-100">
-              <h3 className="text-2xl font-black text-slate-800 mb-8 flex items-center gap-3 uppercase tracking-tighter">
+        {/* MAIN GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+          {/* MACHINE + PLUG */}
+          <div className="lg:col-span-2 space-y-6 md:space-y-8">
+            {/* MACHINE HEALTH */}
+            <div className="bg-white dark:bg-slate-800 p-5 md:p-10 rounded-2xl md:rounded-[3rem] shadow border border-slate-100 dark:border-slate-700">
+              <h3 className="text-lg md:text-2xl font-black text-slate-800 dark:text-white mb-6 flex items-center gap-2 uppercase">
                 <Activity className="text-rose-500" />
                 {t("machineHealth")}
               </h3>
-              <div className="space-y-8">
+
+              <div className="space-y-6">
                 {machines.map((m) => (
-                  <div key={m.id} className="group">
-                    <div className="flex justify-between items-center mb-3">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center text-xl shadow-inner">
+                  <div key={m.id}>
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
                           ⚙️
                         </div>
                         <div>
-                          <p className="font-black text-slate-800 uppercase tracking-tight">
+                          <p className="font-bold text-sm md:text-base">
                             {m.name}
                           </p>
-                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">
+                          <p className="text-[10px] text-slate-400">
                             {t(m.status)}
                           </p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-lg font-black text-slate-900">
-                          {m.efficiency}%
-                        </p>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-tighter">
-                          {t("efficiencyScore")}
-                        </p>
-                      </div>
+
+                      <p className="text-sm md:text-lg font-bold">
+                        {m.efficiency}%
+                      </p>
                     </div>
-                    <div className="w-full bg-slate-50 h-3 rounded-full overflow-hidden border border-slate-100">
+
+                    <div className="w-full bg-slate-100 h-2 rounded-full">
                       <div
-                        className="h-full rounded-full transition-all duration-1000"
+                        className="h-full rounded-full"
                         style={{
                           width: `${m.efficiency}%`,
                           backgroundColor: m.color,
                         }}
-                      ></div>
+                      />
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* --- 🔌 Section 2: Smart Plug Controls --- */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* SMART PLUG */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
               {plugs.map((plug) => (
                 <div
                   key={plug.id}
-                  className={`p-8 rounded-[3rem] border transition-all duration-500 ${plug.status ? "bg-white shadow-xl" : "bg-slate-50 opacity-60"}`}
+                  className={`p-5 md:p-8 rounded-2xl border ${
+                    plug.status
+                      ? "bg-white dark:bg-slate-800 shadow-lg"
+                      : "bg-slate-50 dark:bg-slate-900 opacity-60"
+                  }`}
                 >
-                  <div className="flex justify-between items-center mb-8">
-                    <div className="text-3xl">{plug.icon}</div>
+                  <div className="flex justify-between mb-4">
+                    <div className="text-2xl">{plug.icon}</div>
+
                     <button
                       onClick={() => togglePlug(plug.id)}
-                      className={`w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all active:scale-90 ${plug.status ? "bg-emerald-500 text-white" : "bg-slate-200 text-slate-400"}`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        plug.status
+                          ? "bg-emerald-500 text-white"
+                          : "bg-slate-200 dark:bg-slate-700 text-slate-400"
+                      }`}
                     >
-                      <Power size={20} />
+                      <Power size={16} />
                     </button>
                   </div>
-                  <h4 className="font-black text-slate-800 text-lg tracking-tight uppercase italic">
-                    {plug.name}
-                  </h4>
-                  <div className="mt-6 flex justify-between items-end">
-                    <p className="text-2xl font-black text-slate-900">
-                      {plug.status ? plug.watt : 0}{" "}
-                      <span className="text-xs font-normal opacity-40">W</span>
+
+                  <h4 className="font-bold text-sm md:text-lg">{plug.name}</h4>
+
+                  <div className="mt-4 flex justify-between">
+                    <p className="text-sm font-bold">
+                      {plug.status ? plug.watt : 0} W
                     </p>
-                    <p className="text-xs font-black text-emerald-600">
+                    <p className="text-xs text-emerald-500">
                       ฿{((plug.watt * effectiveRate) / 1000).toFixed(2)}/hr
                     </p>
                   </div>
                 </div>
               ))}
-              <div className="border-2 border-dashed border-slate-200 rounded-[3rem] flex flex-col items-center justify-center p-8 text-slate-300 hover:bg-slate-50 cursor-pointer transition-all group">
-                <Plus
-                  size={40}
-                  className="mb-2 group-hover:rotate-90 transition-transform duration-500"
-                />
-                <p className="font-black text-[10px] uppercase tracking-[0.2em]">
-                  {t("addNewAsset")}
-                </p>
+
+              {/* ADD */}
+              <div className="border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-6 text-slate-400">
+                <Plus size={30} />
+                <p className="text-xs mt-2">{t("addNewAsset")}</p>
               </div>
             </div>
           </div>
 
-          {/* --- 📉 Section 3: Analytics & AI --- */}
-          <div className="space-y-8">
-            <div className="bg-white p-10 rounded-[3.5rem] shadow-sm border border-slate-100">
-              <h3 className="font-black text-slate-800 mb-6 flex items-center gap-2 uppercase tracking-tighter text-sm">
-                <BarChart3 size={18} className="text-blue-500" />{" "}
-                {t("energyIntensity")}
+          {/* RIGHT PANEL */}
+          <div className="space-y-6 md:space-y-8">
+            {/* BAR CHART */}
+            <div className="bg-white dark:bg-slate-800 p-5 md:p-10 rounded-2xl shadow border">
+              <h3 className="text-sm font-bold mb-4 flex items-center gap-2">
+                <BarChart3 size={16} /> {t("energyIntensity")}
               </h3>
-              <div className="h-[250px] w-full">
+
+              <div className="h-[180px] md:h-[250px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={chartData}>
-                    <Bar dataKey="kwh" radius={[10, 10, 10, 10]}>
+                    <Bar dataKey="kwh">
                       {chartData.map((entry, index) => (
                         <Cell
-                          key={`cell-${index}`}
+                          key={index}
                           fill={entry.efficiency < 70 ? "#f43f5e" : "#334155"}
                         />
                       ))}
                     </Bar>
-                    <Tooltip
-                      cursor={{ fill: "transparent" }}
-                      contentStyle={{
-                        borderRadius: "24px",
-                        border: "none",
-                        boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1)",
-                      }}
-                    />
+                    <Tooltip />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-              <p className="text-[10px] text-slate-400 font-black text-center mt-4 uppercase tracking-widest">
-                {t("kwhPerUnit")}
-              </p>
             </div>
 
-            {/* AI Warning Card */}
-            <div className="bg-orange-500 p-10 rounded-[3.5rem] shadow-2xl text-white relative overflow-hidden group">
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <AlertCircle size={18} />
-                  <h3 className="font-black uppercase tracking-[0.2em] text-[10px]">
-                    {t("anomalyDetected")}
-                  </h3>
-                </div>
-                <h4 className="text-3xl font-black mb-4 tracking-tighter italic leading-none">
-                  {t("efficiencyDrop")}
-                </h4>
-                <p className="text-sm opacity-90 leading-relaxed font-medium">
-                  {t("anomalyDesc")}
-                </p>
+            {/* ALERT */}
+            <div className="bg-orange-500 p-6 md:p-10 rounded-2xl text-white">
+              <div className="flex items-center gap-2 mb-4">
+                <AlertCircle size={16} />
+                <p className="text-xs uppercase">{t("anomalyDetected")}</p>
               </div>
-              <div className="absolute -right-6 -bottom-6 text-9xl opacity-10 rotate-12 group-hover:rotate-45 transition-transform duration-1000 select-none">
-                ⚙️
-              </div>
+              <h4 className="text-xl md:text-3xl font-black mb-2">
+                {t("efficiencyDrop")}
+              </h4>
+              <p className="text-sm opacity-90">{t("anomalyDesc")}</p>
             </div>
 
-            {/* Summary Statistics */}
-            <div className="bg-slate-100 p-8 rounded-[3rem] space-y-6">
-              <div className="flex justify-between items-center">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                  {t("dailyRunningCost")}
-                </span>
-                <span className="text-xl font-black text-slate-900 tracking-tighter">
+            {/* SUMMARY */}
+            <div className="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl space-y-4">
+              <div className="flex justify-between">
+                <span className="text-xs">{t("dailyRunningCost")}</span>
+                <span className="font-bold">
                   ฿{((totalWatts * 24 * effectiveRate) / 1000).toLocaleString()}
                 </span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                  {t("avgEfficiency")}
-                </span>
-                <span className="text-xl font-black text-emerald-600 tracking-tighter">
-                  81.6%
-                </span>
+
+              <div className="flex justify-between">
+                <span className="text-xs">{t("avgEfficiency")}</span>
+                <span className="font-bold text-emerald-500">81.6%</span>
               </div>
             </div>
           </div>

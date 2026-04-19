@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Layout from "../components/ui/Layout";
 import { useEnergy } from "../context/EnergyContext";
 import { useTranslation } from "react-i18next";
@@ -7,10 +7,8 @@ import {
   ChevronLeft,
   ChevronRight,
   ArrowDownRight,
-  ArrowUpRight,
   Leaf,
   Download,
-  Filter,
 } from "lucide-react";
 
 export default function History() {
@@ -58,135 +56,132 @@ export default function History() {
 
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto space-y-10 pb-20 animate-in fade-in duration-700">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-6 md:py-10 space-y-8 md:space-y-10">
+        {/* HEADER */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight uppercase italic">
               {t("historyTitle")}
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 font-medium opacity-70">
+            <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400">
               {t("historySub")}
             </p>
           </div>
 
-          <div className="flex items-center gap-3 bg-white dark:bg-slate-800 p-2 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm">
-            {["daily", "weekly", "monthly"].map((type) => (
-              <button
-                key={type}
-                onClick={() => setFilter(type)}
-                className={`px-6 py-2 rounded-xl text-[10px] font-black transition-all uppercase tracking-widest ${
-                  filter.toLowerCase() === type
-                    ? "bg-slate-900 dark:bg-emerald-500 text-white shadow-lg"
-                    : "text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-200"
-                }`}
-              >
-                {t(type)}
-              </button>
-            ))}
+          {/* FILTER (scrollable on mobile) */}
+          <div className="w-full sm:w-auto overflow-x-auto">
+            <div className="flex gap-2 bg-white dark:bg-slate-800 p-2 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm w-max sm:w-auto">
+              {["daily", "weekly", "monthly"].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setFilter(type)}
+                  className={`px-4 sm:px-6 py-2 rounded-xl text-[10px] font-black transition-all uppercase tracking-widest whitespace-nowrap ${
+                    filter.toLowerCase() === type
+                      ? "bg-slate-900 dark:bg-emerald-500 text-white shadow-lg"
+                      : "text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-200"
+                  }`}
+                >
+                  {t(type)}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-sm">
-            <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4 italic">
+        {/* SUMMARY */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div className="bg-white dark:bg-slate-800 p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-sm">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 italic">
               {t("avgDailyCost")}
             </p>
             <div className="flex justify-between items-end">
-              <h4 className="text-4xl font-black text-slate-900 dark:text-white">
+              <h4 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white">
                 ฿ {historyData[0].cost.toFixed(0)}
               </h4>
-              <span className="flex items-center gap-1 text-emerald-500 dark:text-emerald-400 font-black text-[10px] bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1 rounded-full uppercase">
-                <ArrowDownRight size={14} /> 12%
+              <span className="flex items-center gap-1 text-emerald-500 text-[10px] bg-emerald-50 px-2 py-1 rounded-full uppercase">
+                <ArrowDownRight size={12} /> 12%
               </span>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-sm">
-            <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4 italic">
+          <div className="bg-white dark:bg-slate-800 p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] border border-slate-100 dark:border-slate-700 shadow-sm">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 italic">
               {t("totalEnergy")}
             </p>
-            <h4 className="text-4xl font-black text-slate-900 dark:text-white">
+            <h4 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white">
               342.5{" "}
-              <span className="text-sm font-normal text-slate-400 dark:text-slate-500 uppercase">
+              <span className="text-xs md:text-sm font-normal text-slate-400 uppercase">
                 kWh
               </span>
             </h4>
           </div>
 
-          <div className="bg-emerald-600 dark:bg-emerald-700 p-8 rounded-[2.5rem] text-white shadow-xl flex items-center justify-between">
+          <div className="bg-emerald-600 p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] text-white shadow-xl flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-black opacity-60 uppercase tracking-widest mb-4 italic">
+              <p className="text-[10px] opacity-60 uppercase mb-2">
                 {t("carbonOffset")}
               </p>
-              <h4 className="text-4xl font-black">
-                171.2{" "}
-                <span className="text-sm font-normal opacity-60 uppercase">
-                  kg
-                </span>
+              <h4 className="text-2xl md:text-4xl font-black">
+                171.2 <span className="text-xs opacity-60">kg</span>
               </h4>
             </div>
-            <Leaf className="text-emerald-300" size={48} />
+            <Leaf size={36} />
           </div>
         </div>
 
-        {/* Table */}
-        <div className="bg-white dark:bg-slate-800 rounded-[3rem] shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
-          <div className="p-8 border-b border-slate-50 dark:border-slate-700 flex justify-between items-center bg-slate-50/20 dark:bg-slate-900/50">
-            <h3 className="font-black text-slate-800 dark:text-white flex items-center gap-3 uppercase italic">
-              <Calendar
-                className="text-slate-400 dark:text-slate-500"
-                size={20}
-              />
+        {/* TABLE */}
+        <div className="bg-white dark:bg-slate-800 rounded-[2rem] md:rounded-[3rem] shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+          {/* TABLE HEADER */}
+          <div className="p-4 md:p-8 flex justify-between items-center border-b border-slate-100 dark:border-slate-700">
+            <h3 className="font-black text-slate-800 dark:text-white flex items-center gap-2 text-sm md:text-base uppercase">
+              <Calendar size={18} />
               {t("historicalRecords")}
             </h3>
 
-            <button className="p-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-xl text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all">
-              <Download size={20} />
+            <button className="p-2 md:p-3 bg-white dark:bg-slate-900 border rounded-xl text-slate-400 hover:text-slate-900 dark:hover:text-white">
+              <Download size={18} />
             </button>
           </div>
 
+          {/* TABLE SCROLL */}
           <div className="overflow-x-auto">
-            <table className="w-full text-left">
+            <table className="w-full text-left min-w-[600px]">
               <thead>
-                <tr className="text-[10px] text-slate-400 dark:text-slate-500 font-black uppercase tracking-[0.2em] bg-slate-50/50 dark:bg-slate-900/50">
-                  <th className="p-8">{t("dateCol")}</th>
-                  <th className="p-8 text-right">{t("usageCol")}</th>
-                  <th className="p-8 text-right">{t("estCostCol")}</th>
-                  <th className="p-8 text-right">{t("impactCol")}</th>
-                  <th className="p-8">{t("trendCol")}</th>
+                <tr className="text-[10px] text-slate-400 font-black uppercase tracking-widest bg-slate-50 dark:bg-slate-900">
+                  <th className="p-4 md:p-6">{t("dateCol")}</th>
+                  <th className="p-4 md:p-6 text-right">{t("usageCol")}</th>
+                  <th className="p-4 md:p-6 text-right">{t("estCostCol")}</th>
+                  <th className="p-4 md:p-6 text-right">{t("impactCol")}</th>
+                  <th className="p-4 md:p-6">{t("trendCol")}</th>
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-slate-50 dark:divide-slate-700">
+              <tbody>
                 {historyData.map((row, i) => (
                   <tr
                     key={i}
-                    className="hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition-colors"
+                    className="border-t border-slate-100 dark:border-slate-700"
                   >
-                    <td className="p-8 font-black text-slate-700 dark:text-slate-200">
-                      {row.date}
-                    </td>
-                    <td className="p-8 text-right font-bold text-slate-400 dark:text-slate-500 text-sm">
+                    <td className="p-4 md:p-6 font-bold">{row.date}</td>
+                    <td className="p-4 md:p-6 text-right text-sm">
                       {row.kwh} kWh
                     </td>
-                    <td className="p-8 text-right font-black text-blue-600 dark:text-blue-400 text-lg italic">
+                    <td className="p-4 md:p-6 text-right font-bold text-blue-600">
                       ฿ {row.cost.toFixed(2)}
                     </td>
-                    <td className="p-8 text-right font-black text-emerald-600 dark:text-emerald-400 text-sm">
+                    <td className="p-4 md:p-6 text-right text-emerald-600 text-sm">
                       {row.carbon} kgCO2e
                     </td>
-                    <td className="p-8">
-                      {row.trend === "down" ? (
-                        <span className="text-emerald-500 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-4 py-2 rounded-full text-[10px] font-black uppercase">
-                          {t("statusGood")}
-                        </span>
-                      ) : (
-                        <span className="text-rose-500 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 px-4 py-2 rounded-full text-[10px] font-black uppercase">
-                          {t("statusHigh")}
-                        </span>
-                      )}
+                    <td className="p-4 md:p-6">
+                      <span
+                        className={`px-3 py-1 rounded-full text-[10px] font-black uppercase ${
+                          row.trend === "down"
+                            ? "text-emerald-500 bg-emerald-50"
+                            : "text-rose-500 bg-rose-50"
+                        }`}
+                      >
+                        {t(row.trend === "down" ? "statusGood" : "statusHigh")}
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -194,18 +189,18 @@ export default function History() {
             </table>
           </div>
 
-          {/* Pagination */}
-          <div className="p-8 bg-slate-50/30 dark:bg-slate-900/50 flex justify-center items-center gap-6 border-t border-slate-50 dark:border-slate-700">
-            <button className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white">
-              <ChevronLeft size={20} />
+          {/* PAGINATION */}
+          <div className="p-4 md:p-8 flex justify-center items-center gap-4 md:gap-6 border-t border-slate-100 dark:border-slate-700">
+            <button className="p-2 md:p-3 border rounded-xl text-slate-400 hover:text-slate-900">
+              <ChevronLeft size={18} />
             </button>
 
-            <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em]">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
               {t("pageInfo", { current: 1, total: 5 })}
             </span>
 
-            <button className="p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white">
-              <ChevronRight size={20} />
+            <button className="p-2 md:p-3 border rounded-xl text-slate-400 hover:text-slate-900">
+              <ChevronRight size={18} />
             </button>
           </div>
         </div>
