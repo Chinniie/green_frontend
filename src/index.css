@@ -2,126 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
-/* custom style */
-body {
-  @apply bg-gray-100 text-gray-800;
-}
-
+/* --- 🌱 Design Tokens (Light Mode) --- */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --text: #4b5563;
+  --text-h: #111827;
+  --border: #f3f4f6;
 
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  font-size: 16px;
+  line-height: 1.6;
   color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+/* --- 🌙 Dark Mode --- */
+:root.dark {
+  --text: #9ca3af;
+  --text-h: #f3f4f6;
+  --border: #1e293b;
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+/* --- 🧱 Base Layout --- */
+html {
+  font-family: var(--sans);
+
+  /* 🔥 FIX สำคัญ: ย้าย bg มาไว้ที่ html */
+  @apply bg-slate-50 dark:bg-slate-950 transition-colors duration-300;
 }
 
 body {
   margin: 0;
+  padding: 0;
+
+  /* ❌ ห้ามใส่ bg ซ้ำ */
+  @apply text-slate-700 dark:text-slate-300 transition-colors duration-300;
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
+/* --- ✍️ Typography --- */
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+  @apply text-3xl md:text-5xl font-black tracking-tighter my-6 md:my-10;
+  color: var(--text-h);
+  line-height: 1.1;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
+h2 {
+  @apply text-xl md:text-2xl font-bold mb-4 leading-tight;
   color: var(--text-h);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.text-readable {
+  @apply text-sm md:text-base leading-relaxed break-words;
 }
 
-html,
-body,
-#root {
-  height: 100%;
-  margin: 0;
+/* --- 📦 Layout Utilities --- */
+.content-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  @apply p-4 md:p-10;
+}
+
+.card-container {
+  @apply p-6 md:p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col gap-4 transition-colors duration-300;
+}
+
+/* --- 🧭 Scrollbar --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 dark:bg-slate-800 rounded-full;
 }
