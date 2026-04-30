@@ -336,32 +336,40 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 p-12 rounded-[4rem] shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between relative overflow-hidden">
-            <div className="relative z-10 space-y-8">
-              <h3 className="text-2xl font-black text-slate-800 dark:text-white uppercase tracking-tighter italic">
-                <div className="inline-block w-3 h-8 bg-emerald-500 rounded-full mr-4 align-middle" />
+          <div className="bg-white dark:bg-slate-800 p-6 md:p-12 rounded-[2.5rem] md:rounded-[4rem] shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col justify-between relative overflow-hidden">
+            <div className="relative z-10 space-y-6 md:y-8">
+              {/* Header Section */}
+              <h3 className="text-xl md:text-2xl font-black text-slate-800 dark:text-white uppercase tracking-tighter italic">
+                <div className="inline-block w-2 md:w-3 h-6 md:h-8 bg-emerald-500 rounded-full mr-3 md:mr-4 align-middle" />
                 {t("usageSummary")}
               </h3>
-              <div className="grid grid-cols-2 gap-8">
-                <div className="p-8 bg-blue-50 dark:bg-blue-500/5 rounded-[3rem] border border-blue-100 dark:border-blue-500/10">
-                  <p className="text-[10px] text-blue-500 dark:text-blue-400 font-black mb-3 uppercase tracking-widest">
+
+              {/* Responsive Grid: 1 column on mobile, 2 columns on small screens up (sm) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
+                {/* Efficiency Card */}
+                <div className="p-6 md:p-8 bg-blue-50 dark:bg-blue-500/5 rounded-[2rem] md:rounded-[3rem] border border-blue-100 dark:border-blue-500/10 transition-all">
+                  <p className="text-[10px] text-blue-500 dark:text-blue-400 font-black mb-2 md:mb-3 uppercase tracking-widest">
                     {t("efficiency")}
                   </p>
-                  <p className="text-5xl font-black text-blue-700 dark:text-blue-300 tracking-tighter italic">
+                  <p className="text-4xl md:text-5xl font-black text-blue-700 dark:text-blue-300 tracking-tighter italic leading-none">
                     88.4%
                   </p>
                 </div>
-                <div className="p-8 bg-slate-900 dark:bg-emerald-900/30 rounded-[3rem] text-white shadow-xl">
-                  <p className="text-[10px] text-emerald-400 font-black mb-3 uppercase tracking-widest">
+
+                {/* ESG Score Card */}
+                <div className="p-6 md:p-8 bg-slate-900 dark:bg-emerald-900/30 rounded-[2rem] md:rounded-[3rem] text-white shadow-xl transition-all">
+                  <p className="text-[10px] text-emerald-400 font-black mb-2 md:mb-3 uppercase tracking-widest">
                     {t("esgScore")}
                   </p>
-                  <p className="text-5xl font-black tracking-tighter italic">
+                  <p className="text-4xl md:text-5xl font-black tracking-tighter italic leading-none">
                     A+
                   </p>
                 </div>
               </div>
-              <div className="p-8 bg-slate-50 dark:bg-slate-900/50 rounded-[2.5rem] italic text-center border border-slate-100 dark:border-slate-800">
-                <p className="text-slate-400 dark:text-slate-500 font-medium text-sm leading-relaxed">
+
+              {/* Quote Section */}
+              <div className="p-6 md:p-8 bg-slate-50 dark:bg-slate-900/50 rounded-[2rem] md:rounded-[2.5rem] italic text-center border border-slate-100 dark:border-slate-800">
+                <p className="text-slate-400 dark:text-slate-500 font-medium text-xs md:text-sm leading-relaxed">
                   "{t("esgQuote")}"
                 </p>
               </div>
