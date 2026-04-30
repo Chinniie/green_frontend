@@ -73,8 +73,8 @@ export default function Report() {
         {/* --- 1. Action Header --- */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 print:hidden">
           <div>
-            <h1 className="text-4xl font-black text-slate-900 tracking-tighter">
-              Sustainability Center
+            <h1 className="relative text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter italic uppercase leading-tight py-2 transition-colors duration-300 z-10">
+              {("sustainabilityCenter")}
             </h1>
             <p className="text-slate-500 font-medium italic">
               จัดการเอกสารรับรอง ESG สำหรับ {user.domain?.toUpperCase()}
