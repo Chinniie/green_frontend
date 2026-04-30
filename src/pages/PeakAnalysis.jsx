@@ -28,12 +28,13 @@ export default function PeakAnalysis() {
   const fetchPeakData = useCallback(async () => {
     try {
       setLoading(true);
-      
+
       // ✅ แก้ไข: ใช้ Environment Variable แทน localhost
-      const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-      
+      const baseURL =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
       const res = await axios.get(`${baseURL}/energy/usage/${user.id}`);
-      
+
       if (res.data && res.data.data) {
         setData(res.data.data);
       }
@@ -96,8 +97,10 @@ export default function PeakAnalysis() {
               <span className="opacity-30">/</span>
               <span className="text-orange-500">{t("peakLoadIntel")}</span>
             </nav>
-            <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase italic">
-              {t("peakCriticalTrend")}
+            <h1 className="relative text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight md:tracking-tighter uppercase italic leading-tight md:leading-none transition-colors duration-300 py-2">
+              <span className="relative z-10">{t("peakCriticalTrend")}</span>
+              {/* ตัวตกแต่งขีดเส้นใต้แบบ Relative (เลือกใส่หรือไม่ใส่ก็ได้) */}
+              <div className="absolute bottom-0 left-0 w-20 h-1.5 bg-emerald-500 rounded-full opacity-50 dark:opacity-80"></div>
             </h1>
             <p className="text-slate-500 mt-2 font-medium italic opacity-70">
               "{t("peakSubheader")}"
